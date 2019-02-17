@@ -19,8 +19,8 @@ public class PA extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-        
+        Parent root = FXMLLoader.load(getClass().getResource("/pa/views/MainScreen/MainScreen.fxml"));
+        System.out.println(root.toString());
         Scene scene = new Scene(root);
         
         stage.setScene(scene);

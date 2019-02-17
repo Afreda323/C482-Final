@@ -7,7 +7,10 @@ package pa.views.MainScreen;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 
 /**
  * FXML Controller class
@@ -15,13 +18,24 @@ import javafx.fxml.Initializable;
  * @author anthonyfreda
  */
 public class MainScreenController implements Initializable {
-
+    @FXML
+    private Button myButton;
+    
+    /**
+     * Button click event handler
+     * @param event 
+     */
+    @FXML
+    private void handleButtonClick(ActionEvent event) {
+        System.out.println("Button Clicked");
+        myButton.setText("HELLO WORLD");
+    }
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
     }    
     
 }
