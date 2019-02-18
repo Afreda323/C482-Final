@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.net.*?>
 <?import java.util.*?>
@@ -7,8 +9,53 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pa.views.ProductScreen.ProductScreenController">
+<AnchorPane id="AnchorPane" prefHeight="568.0" prefWidth="873.0" style="-fx-background-color: #eeeeee;" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="pa.views.ProductScreen.ProductScreenController">
     <stylesheets>
-        <URL value="@productscreen.css"/>
+        <URL value="@productscreen.css" />
     </stylesheets>
+   <children>
+      <Pane layoutX="28.0" layoutY="33.0" prefHeight="500.0" prefWidth="821.0" style="-fx-border-color: grey; -fx-border-radius: 4px;">
+         <children>
+            <TextField disable="true" editable="false" layoutX="162.0" layoutY="101.0" prefHeight="27.0" prefWidth="182.0" />
+            <TextField layoutX="162.0" layoutY="155.0" prefHeight="27.0" prefWidth="182.0" promptText="Part name" />
+            <TextField layoutX="162.0" layoutY="208.0" prefHeight="27.0" prefWidth="182.0" promptText="Inv" />
+            <TextField layoutX="162.0" layoutY="256.0" prefHeight="27.0" prefWidth="182.0" promptText="Price/Cost" />
+            <TextField layoutX="162.0" layoutY="303.0" prefHeight="27.0" prefWidth="52.0" promptText="Max" />
+            <TextField layoutX="271.0" layoutY="303.0" prefHeight="27.0" prefWidth="73.0" promptText="Min" />
+            <Label layoutX="237.0" layoutY="308.0" text="Min" />
+            <Label layoutX="51.0" layoutY="308.0" text="Max" />
+            <Label layoutX="54.0" layoutY="261.0" text="Price/Cost" />
+            <Label layoutX="55.0" layoutY="213.0" text="Inv" />
+            <Label layoutX="55.0" layoutY="160.0" text="Name" />
+            <Label layoutX="58.0" layoutY="106.0" text="ID" />
+            <Text fill="#000bb5" layoutX="58.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Product">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Text>
+            <Button layoutX="735.0" layoutY="211.0" mnemonicParsing="false" text="Add" />
+            <Button layoutX="488.0" layoutY="38.0" mnemonicParsing="false" text="Search" />
+            <TextField layoutX="561.0" layoutY="39.0" />
+            <TableView layoutX="373.0" layoutY="80.0" prefHeight="125.0" prefWidth="411.0">
+               <columns>
+                  <TableColumn fx:id="PartIDCol" prefWidth="61.60166549682617" text="Part ID" />
+                  <TableColumn fx:id="PartNameCol" prefWidth="86.03319549560547" text="Part Name" />
+                  <TableColumn fx:id="PartInStockCol" prefWidth="105.24897766113281" text="Inventory Level" />
+                  <TableColumn fx:id="PartPriceCol" prefWidth="155.00003051757812" text="Price/Cost per Unit" />
+               </columns>
+            </TableView>
+            <Button layoutX="725.0" layoutY="385.0" mnemonicParsing="false" text="Delete" />
+            <TableView layoutX="374.0" layoutY="254.0" prefHeight="125.0" prefWidth="411.0">
+               <columns>
+                  <TableColumn fx:id="PartIDCol1" prefWidth="61.60166549682617" text="Part ID" />
+                  <TableColumn fx:id="PartNameCol1" prefWidth="86.03319549560547" text="Part Name" />
+                  <TableColumn fx:id="PartInStockCol1" prefWidth="105.24897766113281" text="Inventory Level" />
+                  <TableColumn fx:id="PartPriceCol1" prefWidth="155.00003051757812" text="Price/Cost per Unit" />
+               </columns>
+            </TableView>
+            <Button layoutX="724.0" layoutY="452.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
+            <Button layoutX="668.0" layoutY="452.0" mnemonicParsing="false" text="Save" />
+         </children>
+      </Pane>
+   </children>
 </AnchorPane>
