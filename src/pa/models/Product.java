@@ -23,10 +23,15 @@ public class Product {
         this.associatedParts.add(part);
     }
     
-    public boolean removeAssociatedPart(int partId) {
+    /**
+     * Remove part by id
+     * @param partID
+     * @return 
+     */
+    public boolean removeAssociatedPart(int partID) {
         boolean hasRemoved = false;
         for (Part part : this.associatedParts) {
-            if(part.getPartID() == partId) {
+            if(part.getPartID() == partID) {
                 this.associatedParts.remove(part);
                 hasRemoved = true;
             }
@@ -34,9 +39,14 @@ public class Product {
         return hasRemoved;
     }
     
-    public Part lookupAssociatedPart(int partId) {
+    /**
+     * Get a part by id
+     * @param partID
+     * @return 
+     */
+    public Part lookupAssociatedPart(int partID) {
         for (Part part : this.associatedParts) {
-            if(part.getPartID() == partId) {
+            if(part.getPartID() == partID) {
                 return part;
             }
         }
