@@ -18,23 +18,23 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Text>
-      <RadioButton layoutX="162.0" layoutY="54.0" mnemonicParsing="false" text="In-House" />
-      <RadioButton layoutX="252.0" layoutY="54.0" mnemonicParsing="false" text="Outsourced" />
+      <RadioButton fx:id="InHouseRadio" layoutX="162.0" layoutY="54.0" mnemonicParsing="false" onAction="#handleInHouse" selected="true" text="In-House" />
+      <RadioButton fx:id="OutsourcedRadio" layoutX="252.0" layoutY="54.0" mnemonicParsing="false" onAction="#handleOutsourced" text="Outsourced" />
       <Label layoutX="61.0" layoutY="95.0" text="ID" />
-      <TextField disable="true" editable="false" layoutX="165.0" layoutY="90.0" prefHeight="27.0" prefWidth="182.0" />
-      <TextField layoutX="165.0" layoutY="144.0" prefHeight="27.0" prefWidth="182.0" promptText="Part name" />
+      <TextField fx:id="IDInput" disable="true" editable="false" layoutX="165.0" layoutY="90.0" prefHeight="27.0" prefWidth="182.0" />
+      <TextField fx:id="NameInput" layoutX="165.0" layoutY="144.0" prefHeight="27.0" prefWidth="182.0" promptText="Part name" />
       <Label layoutX="58.0" layoutY="149.0" text="Name" />
       <Label layoutX="58.0" layoutY="202.0" text="Inv" />
-      <TextField layoutX="165.0" layoutY="197.0" prefHeight="27.0" prefWidth="182.0" promptText="Inv" />
+      <TextField fx:id="InventoryInput" layoutX="165.0" layoutY="197.0" prefHeight="27.0" prefWidth="182.0" promptText="Inv" />
       <Label layoutX="57.0" layoutY="250.0" text="Price/Cost" />
-      <TextField layoutX="165.0" layoutY="245.0" prefHeight="27.0" prefWidth="182.0" promptText="Price/Cost" />
-      <TextField layoutX="165.0" layoutY="292.0" prefHeight="27.0" prefWidth="52.0" promptText="Max" />
+      <TextField fx:id="PriceInput" layoutX="165.0" layoutY="245.0" prefHeight="27.0" prefWidth="182.0" promptText="Price/Cost" />
+      <TextField fx:id="MaxInput" layoutX="165.0" layoutY="292.0" prefHeight="27.0" prefWidth="52.0" promptText="Max" />
       <Label layoutX="54.0" layoutY="297.0" text="Max" />
       <Label layoutX="240.0" layoutY="297.0" text="Min" />
-      <TextField layoutX="274.0" layoutY="292.0" prefHeight="27.0" prefWidth="73.0" promptText="Min" />
-      <TextField layoutX="165.0" layoutY="337.0" prefHeight="27.0" prefWidth="182.0" promptText="Comp name" />
-      <Label layoutX="54.0" layoutY="342.0" text="Company Name" />
-      <Button layoutX="232.0" layoutY="401.0" mnemonicParsing="false" text="Save" />
+      <TextField fx:id="MinInput" layoutX="274.0" layoutY="292.0" prefHeight="27.0" prefWidth="73.0" promptText="Min" />
+      <TextField fx:id="COrMInput" layoutX="165.0" layoutY="337.0" prefHeight="27.0" prefWidth="182.0" promptText="Comp name" />
+      <Label fx:id="COrMText" layoutX="54.0" layoutY="342.0" text="Company Name" />
+      <Button layoutX="232.0" layoutY="401.0" mnemonicParsing="false" onAction="#handleSave" text="Save" />
       <Button layoutX="289.0" layoutY="401.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
    </children>
 </AnchorPane>
