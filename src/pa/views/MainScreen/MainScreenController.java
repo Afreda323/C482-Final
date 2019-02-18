@@ -22,16 +22,6 @@ public class MainScreenController implements Initializable {
     private Button myButton;
     
     /**
-     * Button click event handler
-     * @param event 
-     */
-    @FXML
-    private void handleButtonClick(ActionEvent event) {
-        System.out.println("Button Clicked");
-        myButton.setText("HELLO WORLD");
-    }
-    
-    /**
      * Initializes the controller class.
      */
     @Override

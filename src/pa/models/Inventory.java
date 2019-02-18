@@ -3,7 +3,7 @@ package pa.models;
 import java.util.ArrayList;
 
 /**
- *
+ * 
  * @author anthonyfreda
  */
 public class Inventory {
