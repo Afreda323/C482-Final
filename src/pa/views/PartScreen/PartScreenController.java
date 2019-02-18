@@ -101,7 +101,6 @@ public class PartScreenController implements Initializable {
         String max = MaxInput.getText();
         String cOrM = COrMInput.getText();
         if (inHouse) {
-            System.out.println("INHOUSE");
             InhousePart part = new InhousePart();
             part.setPartID(1);
             part.setName(name);

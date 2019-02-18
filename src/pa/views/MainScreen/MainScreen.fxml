@@ -34,7 +34,7 @@
                </font>
             </Text>
             <TextField fx:id="PartsSearchField" layoutX="252.0" layoutY="15.0" />
-            <Button layoutX="185.0" layoutY="15.0" mnemonicParsing="false" text="Search" />
+            <Button layoutX="185.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleSearchPart" text="Search" />
             <Button layoutX="244.0" layoutY="234.0" mnemonicParsing="false" onAction="#showPartsScreen" text="Add" />
             <Button layoutX="295.0" layoutY="234.0" mnemonicParsing="false" onAction="#showPartsScreen" text="Modify" />
             <Button layoutX="364.0" layoutY="234.0" mnemonicParsing="false" text="Delete" />

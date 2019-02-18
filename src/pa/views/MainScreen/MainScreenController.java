@@ -11,6 +11,8 @@ import java.util.ResourceBundle;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +24,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import pa.models.Inventory;
 import static pa.models.Inventory.getParts;
 import static pa.models.Inventory.getProducts;
 import pa.models.Part;
@@ -132,6 +135,30 @@ public class MainScreenController implements Initializable {
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.show();
+    }
+    
+    /**
+     * Handle the click of search button in parts section
+     * @param event
+     * @throws IOException 
+     */
+    @FXML
+    void handleSearchPart(ActionEvent event) throws IOException {
+        String input = PartsSearchField.getText();
+        if (input.trim().equals("")) {
+            populateParts();
+            return;
+        }
+        
+        Part searchedPart = Inventory.lookupPart(Integer.parseInt(input));
+        
+        if (searchedPart != null) {
+            ObservableList<Part> filteredPartsList = FXCollections.observableArrayList();
+            filteredPartsList.add(searchedPart);
+            PartsTable.setItems(filteredPartsList);
+        } else {
+            PartsTable.setItems(FXCollections.observableArrayList());
+        }
     }
 
     /**
