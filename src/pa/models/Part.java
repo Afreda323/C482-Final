@@ -13,6 +13,13 @@ public abstract class Part {
     private int max;
     
     /**
+     * Constructor
+     */
+    public Part() {
+
+    }
+    
+    /**
      * Get the part ID
      * @return 
      */

@@ -16,6 +16,13 @@ public class Product {
     private int max;
     
     /**
+     * Constructor
+     */
+    public Product() {
+
+    }
+    
+    /**
      * Add a part
      * @param part 
      */

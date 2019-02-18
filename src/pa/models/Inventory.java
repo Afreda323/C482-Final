@@ -1,108 +1,142 @@
 package pa.models;
 
-import java.util.ArrayList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
- * 
+ *
  * @author anthonyfreda
  */
 public class Inventory {
-    private ArrayList<Product> products;
-    private ArrayList<Part> allParts;
-    
+
+    private final static ObservableList<Product> products = FXCollections.observableArrayList();
+    private final static ObservableList<Part> allParts = FXCollections.observableArrayList();
+
+    /**
+     * Constructor
+     */
+    public Inventory() {
+
+    }
+
     /**
      * Add a product to inventory
-     * @param product 
+     *
+     * @param product
      */
-    public void addProduct(Product product) {
-        this.products.add(product);
+    public static void addProduct(Product product) {
+        products.add(product);
     }
-    
+
     /**
      * update a product at an index
-     * @param index 
-     * @param product 
+     *
+     * @param index
+     * @param product
      */
-    public void updateProduct(int index, Product product) {
-        this.products.set(index, product);
+    public static void updateProduct(int index, Product product) {
+        products.set(index, product);
     }
-    
+
     /**
      * Remove product by id
+     *
      * @param productID
-     * @return 
+     * @return
      */
-    public boolean removeProduct(int productID) {
+    public static boolean removeProduct(int productID) {
         boolean hasRemoved = false;
-        for (Product product : this.products) {
-            if(product.getProductID()== productID) {
-                this.products.remove(product);
+        for (Product product : products) {
+            if (product.getProductID() == productID) {
+                products.remove(product);
                 hasRemoved = true;
             }
         }
         return hasRemoved;
     }
-    
+
     /**
      * Get a product by id
+     *
      * @param productID
-     * @return 
+     * @return
      */
-    public Product lookupProduct(int productID) {
-        for (Product product : this.products) {
-            if(product.getProductID() == productID) {
+    public static Product lookupProduct(int productID) {
+        for (Product product : products) {
+            if (product.getProductID() == productID) {
                 return product;
             }
         }
         return null;
     }
-    
-    
+
     /**
      * Add a part to inventory
-     * @param part 
+     *
+     * @param part
      */
-    public void addPart(Part part) {
-        this.allParts.add(part);
+    public static void addPart(Part part) {
+        allParts.add(part);
     }
-    
+
     /**
      * update a part at an index
-     * @param index 
-     * @param part 
+     *
+     * @param index
+     * @param part
      */
-    public void updatePart(int index, Part part) {
-        this.allParts.set(index, part);
+    public static void updatePart(int index, Part part) {
+        allParts.set(index, part);
     }
-    
+
     /**
      * Remove part by id
+     *
      * @param partID
-     * @return 
+     * @return
      */
-    public boolean deletePart(int partID) {
+    public static boolean deletePart(int partID) {
         boolean hasRemoved = false;
-        for (Part part : this.allParts) {
-            if(part.getPartID()== partID) {
-                this.allParts.remove(part);
+        for (Part part : allParts) {
+            if (part.getPartID() == partID) {
+                allParts.remove(part);
                 hasRemoved = true;
             }
         }
 
         return hasRemoved;
     }
-    
+
     /**
      * Get a part by id
+     *
      * @param partID
-     * @return 
+     * @return
      */
-    public Part lookupPart(int partID) {
-        for (Part part : this.allParts) {
-            if(part.getPartID() == partID) {
+    public static Part lookupPart(int partID) {
+        for (Part part : allParts) {
+            if (part.getPartID() == partID) {
                 return part;
             }
         }
         return null;
+    }
+
+    /**
+     * Get all parts
+     *
+     * @return
+     */
+    static public ObservableList<Part> getParts() {
+        return allParts;
+    }
+
+    /**
+     * Get all products
+     *
+     * @return
+     */
+    static public ObservableList<Product> getProducts() {
+        return products;
     }
 }

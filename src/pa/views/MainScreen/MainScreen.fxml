@@ -20,12 +20,12 @@
       </Text>
       <Pane layoutX="13.0" layoutY="56.0" prefHeight="279.0" prefWidth="432.0" style="-fx-border-color: grey; -fx-border-width: 1px; -fx-border-radius: 4px;">
          <children>
-            <TableView layoutY="54.0" prefHeight="168.0" prefWidth="432.0">
+            <TableView fx:id="PartsTable" layoutX="10.0" layoutY="54.0" prefHeight="168.0" prefWidth="411.0">
               <columns>
-                <TableColumn prefWidth="77.53409957885742" text="Part ID" />
-                <TableColumn prefWidth="92.46587371826172" text="Part Name" />
-                  <TableColumn prefWidth="108.79547119140625" text="Inventory Level" />
-                  <TableColumn prefWidth="151.0" text="Price/Cost per Unit" />
+                <TableColumn fx:id="PartIDCol" prefWidth="61.60166549682617" text="Part ID" />
+                <TableColumn fx:id="PartNameCol" prefWidth="86.03319549560547" text="Part Name" />
+                  <TableColumn fx:id="PartInStockCol" prefWidth="105.24897766113281" text="Inventory Level" />
+                  <TableColumn fx:id="PartPriceCol" prefWidth="155.00003051757812" text="Price/Cost per Unit" />
               </columns>
             </TableView>
             <Text layoutX="14.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Parts">
@@ -33,21 +33,21 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Text>
-            <TextField layoutX="252.0" layoutY="15.0" />
+            <TextField fx:id="PartsSearchField" layoutX="252.0" layoutY="15.0" />
             <Button layoutX="185.0" layoutY="15.0" mnemonicParsing="false" text="Search" />
-            <Button layoutX="244.0" layoutY="234.0" mnemonicParsing="false" text="Add" />
-            <Button layoutX="295.0" layoutY="234.0" mnemonicParsing="false" text="Modify" />
+            <Button layoutX="244.0" layoutY="234.0" mnemonicParsing="false" onAction="#showPartsScreen" text="Add" />
+            <Button layoutX="295.0" layoutY="234.0" mnemonicParsing="false" onAction="#showPartsScreen" text="Modify" />
             <Button layoutX="364.0" layoutY="234.0" mnemonicParsing="false" text="Delete" />
          </children>
       </Pane>
       <Pane layoutX="457.0" layoutY="56.0" prefHeight="280.0" prefWidth="426.0" style="-fx-border-color: grey; -fx-border-width: 1px; -fx-border-radius: 4px;">
          <children>
-            <TableView layoutY="54.0" prefHeight="170.0" prefWidth="426.0">
+            <TableView fx:id="ProductsTable" layoutX="11.0" layoutY="54.0" prefHeight="170.0" prefWidth="404.0">
                <columns>
-                  <TableColumn prefWidth="81.22775268554688" text="Product ID" />
-                  <TableColumn prefWidth="93.77227783203125" text="Product Name" />
-                  <TableColumn prefWidth="115.46246337890625" text="Inventory Level" />
-                  <TableColumn prefWidth="134.0" text="Price/Cost per Unit" />
+                  <TableColumn fx:id="ProductIDCol" prefWidth="81.22775268554688" text="Product ID" />
+                  <TableColumn fx:id="ProductNameCol" prefWidth="93.77227783203125" text="Product Name" />
+                  <TableColumn fx:id="ProductInStockCol" prefWidth="104.6473388671875" text="Inventory Level" />
+                  <TableColumn fx:id="ProductPriceCol" prefWidth="119.3525390625" text="Price per Unit" />
                </columns>
             </TableView>
             <Text layoutX="14.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Products">
@@ -55,13 +55,13 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Text>
-            <TextField layoutX="246.0" layoutY="15.0" />
+            <TextField fx:id="ProductsSearchField" layoutX="246.0" layoutY="15.0" />
             <Button layoutX="179.0" layoutY="14.0" mnemonicParsing="false" text="Search" />
             <Button layoutX="359.0" layoutY="235.0" mnemonicParsing="false" text="Delete" />
             <Button layoutX="290.0" layoutY="235.0" mnemonicParsing="false" text="Modify" />
             <Button layoutX="239.0" layoutY="235.0" mnemonicParsing="false" text="Add" />
          </children>
       </Pane>
-      <Button layoutX="834.0" layoutY="353.0" mnemonicParsing="false" text="Exit" />
+      <Button layoutX="834.0" layoutY="353.0" mnemonicParsing="false" onAction="#handleExit" text="Exit" />
    </children>
 </AnchorPane>
