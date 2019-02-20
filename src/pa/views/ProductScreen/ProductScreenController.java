@@ -48,6 +48,19 @@ public class ProductScreenController implements Initializable {
     @FXML
     private TextField PartsSearchField;
 
+    @FXML
+    private TableView<Part> ProductPartsTable;
+    @FXML
+    private TableColumn<Part, Integer> ProductPartIDCol;
+    @FXML
+    private TableColumn<Part, String> ProductPartNameCol;
+    @FXML
+    private TableColumn<Part, Integer> ProductPartInStockCol;
+    @FXML
+    private TableColumn<Part, Double> ProductPartPriceCol;
+
+    private ObservableList<Part> productParts = FXCollections.observableArrayList();
+
     /**
      * Called on cancel button click
      *
@@ -73,23 +86,59 @@ public class ProductScreenController implements Initializable {
         PartInStockCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getInStock()).asObject());
         PartPriceCol.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getPrice()).asObject());
         populateParts();
+
+        ProductPartIDCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getPartID()).asObject());
+        ProductPartNameCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
+        ProductPartInStockCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getInStock()).asObject());
+        ProductPartPriceCol.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getPrice()).asObject());
+        populateProductParts();
     }
-    
+
     /**
      * parts table.
      */
     public void populateParts() {
         PartsTable.setItems(getParts());
     }
-    
+
+    /**
+     * product parts table.
+     */
+    public void populateProductParts() {
+        ProductPartsTable.setItems(productParts);
+    }
+
+    /**
+     * Handle the click of add button
+     *
+     * @param event
+     */
+    @FXML
+    void handleAddPart(ActionEvent event) {
+        Part selectedPart = PartsTable.getSelectionModel().getSelectedItem();
+        productParts.add(selectedPart);
+        populateProductParts();
+    }
+
+    /**
+     * Handle the click of delete button
+     *
+     * @param event
+     */
+    @FXML
+    void handleDeletePart(ActionEvent event) {
+        Part part = ProductPartsTable.getSelectionModel().getSelectedItem();
+        productParts.remove(part);
+
+    }
+
     /**
      * Handle the click of search button in parts section
      *
      * @param event
-     * @throws IOException
      */
     @FXML
-    void handleSearchPart(ActionEvent event) throws IOException {
+    void handleSearchPart(ActionEvent event) {
         String input = PartsSearchField.getText();
         if (input.trim().equals("")) {
             populateParts();
