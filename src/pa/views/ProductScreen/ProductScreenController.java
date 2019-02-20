@@ -8,6 +8,11 @@ package pa.views.ProductScreen;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +20,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import pa.models.Inventory;
+import static pa.models.Inventory.getParts;
+import pa.models.Part;
 
 /**
  * FXML Controller class
@@ -23,6 +34,19 @@ import javafx.stage.Stage;
  * @author anthonyfreda
  */
 public class ProductScreenController implements Initializable {
+
+    @FXML
+    private TableView<Part> PartsTable;
+    @FXML
+    private TableColumn<Part, Integer> PartIDCol;
+    @FXML
+    private TableColumn<Part, String> PartNameCol;
+    @FXML
+    private TableColumn<Part, Integer> PartInStockCol;
+    @FXML
+    private TableColumn<Part, Double> PartPriceCol;
+    @FXML
+    private TextField PartsSearchField;
 
     /**
      * Called on cancel button click
@@ -44,7 +68,43 @@ public class ProductScreenController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        PartIDCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getPartID()).asObject());
+        PartNameCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
+        PartInStockCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getInStock()).asObject());
+        PartPriceCol.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getPrice()).asObject());
+        populateParts();
+    }
+    
+    /**
+     * parts table.
+     */
+    public void populateParts() {
+        PartsTable.setItems(getParts());
+    }
+    
+    /**
+     * Handle the click of search button in parts section
+     *
+     * @param event
+     * @throws IOException
+     */
+    @FXML
+    void handleSearchPart(ActionEvent event) throws IOException {
+        String input = PartsSearchField.getText();
+        if (input.trim().equals("")) {
+            populateParts();
+            return;
+        }
+
+        Part searchedPart = Inventory.lookupPart(Integer.parseInt(input));
+
+        if (searchedPart != null) {
+            ObservableList<Part> filteredPartsList = FXCollections.observableArrayList();
+            filteredPartsList.add(searchedPart);
+            PartsTable.setItems(filteredPartsList);
+        } else {
+            PartsTable.setItems(FXCollections.observableArrayList());
+        }
     }
 
 }
