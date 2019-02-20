@@ -13,7 +13,7 @@
         <URL value="@partscreen.css" />
     </stylesheets>
    <children>
-      <Text fill="#000bb5" layoutX="53.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Part">
+      <Text fx:id="PageTitle" fill="#000bb5" layoutX="53.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Part">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
@@ -32,7 +32,7 @@
       <Label layoutX="54.0" layoutY="297.0" text="Max" />
       <Label layoutX="240.0" layoutY="297.0" text="Min" />
       <TextField fx:id="MinInput" layoutX="274.0" layoutY="292.0" prefHeight="27.0" prefWidth="73.0" promptText="Min" />
-      <TextField fx:id="COrMInput" layoutX="165.0" layoutY="337.0" prefHeight="27.0" prefWidth="182.0" promptText="Comp name" />
+      <TextField fx:id="COrMInput" layoutX="165.0" layoutY="337.0" prefHeight="27.0" prefWidth="182.0" />
       <Label fx:id="COrMText" layoutX="54.0" layoutY="342.0" text="Company Name" />
       <Button layoutX="232.0" layoutY="401.0" mnemonicParsing="false" onAction="#handleSave" text="Save" />
       <Button layoutX="289.0" layoutY="401.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />

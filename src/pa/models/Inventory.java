@@ -82,11 +82,10 @@ public class Inventory {
     /**
      * update a part at an index
      *
-     * @param index
      * @param part
      */
-    public static void updatePart(int index, Part part) {
-        allParts.set(index, part);
+    public static void updatePart(Part part) {
+        allParts.set(part.getPartID(), part);
     }
 
     /**

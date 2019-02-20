@@ -66,15 +66,49 @@ public class MainScreenController implements Initializable {
      * These values will be used by other pages to see if a part was selected to
      * be modified
      */
-    private static Part modifiedPart;
-    private static Product modifiedProduct;
+    private static Part selectedPart;
+    private static Product selectedProduct;
 
-    public static Part getModifiedPart() {
-        return modifiedPart;
+    public void setSelectedPart(Part part) {
+        MainScreenController.selectedPart = part;
     }
 
-    public static Product getModifiedProduct() {
-        return modifiedProduct;
+    public static Part getSelectedPart() {
+        return selectedPart;
+    }
+
+    public void setSelectedProduct(Product product) {
+        MainScreenController.selectedProduct = product;
+    }
+
+    public static Product getSelectedProduct() {
+        return selectedProduct;
+    }
+
+    /**
+     * Handle clicking of modify part button
+     *
+     * @param event
+     * @throws IOException
+     */
+    @FXML
+    void handleModifyPart(ActionEvent event) throws IOException {
+        selectedPart = PartsTable.getSelectionModel().getSelectedItem();
+        setSelectedPart(selectedPart);
+        showPartsScreen(event);
+    }
+
+    /**
+     * Handle clicking of delete part button
+     *
+     * @param event
+     */
+    @FXML
+    void handleDeletePart(ActionEvent event) {
+        selectedPart = PartsTable.getSelectionModel().getSelectedItem();
+        Inventory.deletePart(selectedPart.getPartID());
+        setSelectedPart(null);
+        populateParts();
     }
 
     /**
@@ -95,6 +129,9 @@ public class MainScreenController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        setSelectedPart(null);
+        setSelectedProduct(null);
+        
         PartIDCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getPartID()).asObject());
         PartNameCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
         PartInStockCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getInStock()).asObject());
@@ -136,11 +173,12 @@ public class MainScreenController implements Initializable {
         window.setScene(scene);
         window.show();
     }
-    
+
     /**
      * Handle the click of search button in parts section
+     *
      * @param event
-     * @throws IOException 
+     * @throws IOException
      */
     @FXML
     void handleSearchPart(ActionEvent event) throws IOException {
@@ -149,9 +187,9 @@ public class MainScreenController implements Initializable {
             populateParts();
             return;
         }
-        
+
         Part searchedPart = Inventory.lookupPart(Integer.parseInt(input));
-        
+
         if (searchedPart != null) {
             ObservableList<Part> filteredPartsList = FXCollections.observableArrayList();
             filteredPartsList.add(searchedPart);
