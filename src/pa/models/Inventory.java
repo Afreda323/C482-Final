@@ -31,11 +31,10 @@ public class Inventory {
     /**
      * update a product at an index
      *
-     * @param index
      * @param product
      */
-    public static void updateProduct(int index, Product product) {
-        products.set(index, product);
+    public static void updateProduct(Product product) {
+        products.set(product.getProductID(), product);
     }
 
     /**

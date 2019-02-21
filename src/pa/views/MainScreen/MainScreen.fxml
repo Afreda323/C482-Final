@@ -9,9 +9,6 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="895.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pa.views.MainScreen.MainScreenController">
-    <stylesheets>
-        <URL value="@mainscreen.css" />
-    </stylesheets>
    <children>
       <Text fill="#000c90" layoutX="14.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inventory Management System">
          <font>
@@ -56,9 +53,9 @@
                </font>
             </Text>
             <TextField fx:id="ProductsSearchField" layoutX="246.0" layoutY="15.0" />
-            <Button layoutX="179.0" layoutY="14.0" mnemonicParsing="false" text="Search" />
-            <Button layoutX="359.0" layoutY="235.0" mnemonicParsing="false" text="Delete" />
-            <Button layoutX="290.0" layoutY="235.0" mnemonicParsing="false" text="Modify" />
+            <Button layoutX="179.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleSearchProduct" text="Search" />
+            <Button layoutX="359.0" layoutY="235.0" mnemonicParsing="false" onAction="#handleDeleteProduct" text="Delete" />
+            <Button layoutX="290.0" layoutY="235.0" mnemonicParsing="false" onAction="#handleModifyProduct" text="Modify" />
             <Button layoutX="239.0" layoutY="235.0" mnemonicParsing="false" onAction="#showProductScreen" text="Add" />
          </children>
       </Pane>

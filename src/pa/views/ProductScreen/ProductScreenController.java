@@ -23,10 +23,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import pa.models.Inventory;
 import static pa.models.Inventory.getParts;
 import pa.models.Part;
+import pa.models.Product;
+import static pa.views.MainScreen.MainScreenController.getSelectedProduct;
 
 /**
  * FXML Controller class
@@ -34,6 +37,21 @@ import pa.models.Part;
  * @author anthonyfreda
  */
 public class ProductScreenController implements Initializable {
+
+    @FXML
+    private Text PageTitle;
+    @FXML
+    private TextField IDInput;
+    @FXML
+    private TextField NameInput;
+    @FXML
+    private TextField InventoryInput;
+    @FXML
+    private TextField PriceInput;
+    @FXML
+    private TextField MaxInput;
+    @FXML
+    private TextField MinInput;
 
     @FXML
     private TableView<Part> PartsTable;
@@ -60,6 +78,14 @@ public class ProductScreenController implements Initializable {
     private TableColumn<Part, Double> ProductPartPriceCol;
 
     private ObservableList<Part> productParts = FXCollections.observableArrayList();
+    private final Product selectedProduct;
+
+    /**
+     * Constructor
+     */
+    public ProductScreenController() {
+        this.selectedProduct = getSelectedProduct();
+    }
 
     /**
      * Called on cancel button click
@@ -78,9 +104,28 @@ public class ProductScreenController implements Initializable {
 
     /**
      * Initializes the controller class.
+     *
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        // Check for selected product,
+        // if it exists, update the inputs to reflect
+        if (selectedProduct == null) {
+            PageTitle.setText("Add Product");
+            IDInput.setText("AUTO GEN");
+        } else {
+            PageTitle.setText("Modify Product");
+            IDInput.setText(Integer.toString(selectedProduct.getProductID()));
+            NameInput.setText(selectedProduct.getName());
+            InventoryInput.setText(Integer.toString(selectedProduct.getInStock()));
+            PriceInput.setText(Double.toString(selectedProduct.getPrice()));
+            MinInput.setText(Integer.toString(selectedProduct.getMin()));
+            MaxInput.setText(Integer.toString(selectedProduct.getMax()));
+
+            productParts = selectedProduct.getAssociatedParts();
+        }
         PartIDCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getPartID()).asObject());
         PartNameCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
         PartInStockCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getInStock()).asObject());
@@ -129,7 +174,6 @@ public class ProductScreenController implements Initializable {
     void handleDeletePart(ActionEvent event) {
         Part part = ProductPartsTable.getSelectionModel().getSelectedItem();
         productParts.remove(part);
-
     }
 
     /**
@@ -154,6 +198,47 @@ public class ProductScreenController implements Initializable {
         } else {
             PartsTable.setItems(FXCollections.observableArrayList());
         }
+    }
+
+    /**
+     * Handle saving a product
+     *
+     * @param event
+     */
+    @FXML
+    void handleSave(ActionEvent event) throws IOException {
+        String nameInput = NameInput.getText();
+        String inventoryInput = InventoryInput.getText();
+        String priceInput = PriceInput.getText();
+        String minInput = MinInput.getText();
+        String maxInput = MaxInput.getText();
+
+        Product createdProduct = new Product();
+        createdProduct.setName(nameInput);
+        createdProduct.setInStock(Integer.parseInt(inventoryInput));
+        createdProduct.setPrice(Double.parseDouble(priceInput));
+        createdProduct.setMin(Integer.parseInt(minInput));
+        createdProduct.setMax(Integer.parseInt(maxInput));
+
+        // Add parts to product
+        productParts.forEach((part) -> {
+            createdProduct.addAssociatedPart(part);
+        });
+
+        // Create or update product
+        if (selectedProduct == null) {
+            createdProduct.setProductID(Inventory.getProducts().size());
+            Inventory.addProduct(createdProduct);
+        } else {
+            createdProduct.setProductID(selectedProduct.getProductID());
+            Inventory.updateProduct(createdProduct);
+        }
+
+        Parent loader = FXMLLoader.load(getClass().getResource("/pa/views/MainScreen/MainScreen.fxml"));
+        Scene scene = new Scene(loader);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(scene);
+        window.show();
     }
 
 }

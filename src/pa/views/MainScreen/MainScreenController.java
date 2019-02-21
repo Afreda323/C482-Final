@@ -99,6 +99,19 @@ public class MainScreenController implements Initializable {
     }
 
     /**
+     * Handle clicking of modify product button
+     *
+     * @param event
+     * @throws IOException
+     */
+    @FXML
+    void handleModifyProduct(ActionEvent event) throws IOException {
+        selectedProduct = ProductsTable.getSelectionModel().getSelectedItem();
+        setSelectedProduct(selectedProduct);
+        showProductScreen(event);
+    }
+
+    /**
      * Handle clicking of delete part button
      *
      * @param event
@@ -109,6 +122,19 @@ public class MainScreenController implements Initializable {
         Inventory.deletePart(selectedPart.getPartID());
         setSelectedPart(null);
         populateParts();
+    }
+
+    /**
+     * Handle clicking of delete product button
+     *
+     * @param event
+     */
+    @FXML
+    void handleDeleteProduct(ActionEvent event) {
+        selectedProduct = ProductsTable.getSelectionModel().getSelectedItem();
+        Inventory.removeProduct(selectedProduct.getProductID());
+        setSelectedProduct(null);
+        populateProducts();
     }
 
     /**
@@ -131,7 +157,7 @@ public class MainScreenController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         setSelectedPart(null);
         setSelectedProduct(null);
-        
+
         PartIDCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getPartID()).asObject());
         PartNameCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
         PartInStockCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getInStock()).asObject());
@@ -178,10 +204,9 @@ public class MainScreenController implements Initializable {
      * Handle the click of search button in parts section
      *
      * @param event
-     * @throws IOException
      */
     @FXML
-    void handleSearchPart(ActionEvent event) throws IOException {
+    void handleSearchPart(ActionEvent event) {
         String input = PartsSearchField.getText();
         if (input.trim().equals("")) {
             populateParts();
@@ -196,6 +221,30 @@ public class MainScreenController implements Initializable {
             PartsTable.setItems(filteredPartsList);
         } else {
             PartsTable.setItems(FXCollections.observableArrayList());
+        }
+    }
+
+    /**
+     * Handle the click of search button in products section
+     *
+     * @param event
+     */
+    @FXML
+    void handleSearchProduct(ActionEvent event) {
+        String input = ProductsSearchField.getText();
+        if (input.trim().equals("")) {
+            populateProducts();
+            return;
+        }
+
+        Product searchedProduct = Inventory.lookupProduct(Integer.parseInt(input));
+
+        if (searchedProduct != null) {
+            ObservableList<Product> filteredProductsList = FXCollections.observableArrayList();
+            filteredProductsList.add(searchedProduct);
+            ProductsTable.setItems(filteredProductsList);
+        } else {
+            ProductsTable.setItems(FXCollections.observableArrayList());
         }
     }
 

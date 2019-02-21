@@ -10,25 +10,22 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane id="AnchorPane" prefHeight="568.0" prefWidth="873.0" style="-fx-background-color: #eeeeee;" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pa.views.ProductScreen.ProductScreenController">
-    <stylesheets>
-        <URL value="@productscreen.css" />
-    </stylesheets>
    <children>
       <Pane layoutX="28.0" layoutY="33.0" prefHeight="500.0" prefWidth="821.0" style="-fx-border-color: grey; -fx-border-radius: 4px;">
          <children>
-            <TextField disable="true" editable="false" layoutX="162.0" layoutY="101.0" prefHeight="27.0" prefWidth="182.0" />
-            <TextField layoutX="162.0" layoutY="155.0" prefHeight="27.0" prefWidth="182.0" promptText="Part name" />
-            <TextField layoutX="162.0" layoutY="208.0" prefHeight="27.0" prefWidth="182.0" promptText="Inv" />
-            <TextField layoutX="162.0" layoutY="256.0" prefHeight="27.0" prefWidth="182.0" promptText="Price/Cost" />
-            <TextField layoutX="162.0" layoutY="303.0" prefHeight="27.0" prefWidth="52.0" promptText="Max" />
-            <TextField layoutX="271.0" layoutY="303.0" prefHeight="27.0" prefWidth="73.0" promptText="Min" />
-            <Label layoutX="237.0" layoutY="308.0" text="Min" />
-            <Label layoutX="51.0" layoutY="308.0" text="Max" />
+            <TextField fx:id="IDInput" disable="true" editable="false" layoutX="162.0" layoutY="101.0" prefHeight="27.0" prefWidth="182.0" />
+            <TextField fx:id="NameInput" layoutX="162.0" layoutY="155.0" prefHeight="27.0" prefWidth="182.0" promptText="Part name" />
+            <TextField fx:id="InventoryInput" layoutX="162.0" layoutY="208.0" prefHeight="27.0" prefWidth="182.0" promptText="Inv" />
+            <TextField fx:id="PriceInput" layoutX="162.0" layoutY="256.0" prefHeight="27.0" prefWidth="182.0" promptText="Price/Cost" />
+            <TextField fx:id="MinInput" layoutX="162.0" layoutY="303.0" prefHeight="27.0" prefWidth="52.0" promptText="Min" />
+            <TextField fx:id="MaxInput" layoutX="271.0" layoutY="303.0" prefHeight="27.0" prefWidth="73.0" promptText="Max" />
+            <Label layoutX="237.0" layoutY="308.0" text="Max" />
+            <Label layoutX="51.0" layoutY="308.0" text="Min" />
             <Label layoutX="54.0" layoutY="261.0" text="Price/Cost" />
             <Label layoutX="55.0" layoutY="213.0" text="Inv" />
             <Label layoutX="55.0" layoutY="160.0" text="Name" />
             <Label layoutX="58.0" layoutY="106.0" text="ID" />
-            <Text fill="#000bb5" layoutX="58.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Product">
+            <Text fx:id="PageTitle" fill="#000bb5" layoutX="58.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Product">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
@@ -54,7 +51,7 @@
                </columns>
             </TableView>
             <Button layoutX="724.0" layoutY="452.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
-            <Button layoutX="668.0" layoutY="452.0" mnemonicParsing="false" text="Save" />
+            <Button layoutX="668.0" layoutY="452.0" mnemonicParsing="false" onAction="#handleSave" text="Save" />
          </children>
       </Pane>
    </children>
