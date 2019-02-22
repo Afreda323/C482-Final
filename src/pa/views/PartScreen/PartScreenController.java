@@ -25,6 +25,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import pa.ValidationException;
 import pa.models.InhousePart;
 import pa.models.Inventory;
 import pa.models.OutsourcedPart;
@@ -87,7 +88,7 @@ public class PartScreenController implements Initializable {
         alert.setHeaderText("Cancel?");
         alert.setContentText("Leaving now will result in updates not being saved.");
         Optional<ButtonType> result = alert.showAndWait();
-        
+
         if (result.get() == ButtonType.OK) {
             Parent loader = FXMLLoader.load(getClass().getResource("/pa/views/MainScreen/MainScreen.fxml"));
             Scene scene = new Scene(loader);
@@ -142,14 +143,29 @@ public class PartScreenController implements Initializable {
             part.setMax(Integer.parseInt(max));
             part.setMachineID(Integer.parseInt(cOrM));
 
-            if (selectedPart == null) {
-                part.setPartID(Inventory.getParts().size());
-                Inventory.addPart(part);
-            } else {
-                int partID = selectedPart.getPartID();
-                part.setPartID(partID);
-                Inventory.updatePart(part);
+            try {
+                part.validate();
+                if (selectedPart == null) {
+                    part.setPartID(Inventory.getParts().size());
+                    Inventory.addPart(part);
+                } else {
+                    int partID = selectedPart.getPartID();
+                    part.setPartID(partID);
+                    Inventory.updatePart(part);
+                }
+                Parent loader = FXMLLoader.load(getClass().getResource("/pa/views/MainScreen/MainScreen.fxml"));
+                Scene scene = new Scene(loader);
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setScene(scene);
+                window.show();
+            } catch (ValidationException e) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("ValidationError");
+                alert.setHeaderText("Invalid part.");
+                alert.setContentText(e.getMessage());
+                alert.showAndWait();
             }
+
         } else {
             OutsourcedPart part = new OutsourcedPart();
             part.setName(name);
@@ -158,21 +174,29 @@ public class PartScreenController implements Initializable {
             part.setMin(Integer.parseInt(min));
             part.setMax(Integer.parseInt(max));
             part.setCompanyName(cOrM);
-
-            if (selectedPart == null) {
-                part.setPartID(Inventory.getParts().size());
-                Inventory.addPart(part);
-            } else {
-                int partID = selectedPart.getPartID();
-                part.setPartID(partID);
-                Inventory.updatePart(part);
+            try {
+                part.validate();
+                if (selectedPart == null) {
+                    part.setPartID(Inventory.getParts().size());
+                    Inventory.addPart(part);
+                } else {
+                    int partID = selectedPart.getPartID();
+                    part.setPartID(partID);
+                    Inventory.updatePart(part);
+                }
+                Parent loader = FXMLLoader.load(getClass().getResource("/pa/views/MainScreen/MainScreen.fxml"));
+                Scene scene = new Scene(loader);
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setScene(scene);
+                window.show();
+            } catch (ValidationException e) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("ValidationError");
+                alert.setHeaderText("Invalid part.");
+                alert.setContentText(e.getMessage());
+                alert.showAndWait();
             }
         }
-        Parent loader = FXMLLoader.load(getClass().getResource("/pa/views/MainScreen/MainScreen.fxml"));
-        Scene scene = new Scene(loader);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.show();
     }
 
     /**

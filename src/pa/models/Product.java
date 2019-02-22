@@ -1,12 +1,15 @@
 package pa.models;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import pa.ValidationException;
 
 /**
  *
  * @author anthonyfreda
  */
 public class Product {
+
     private final ObservableList<Part> associatedParts;
     private int productID;
     private String name;
@@ -141,7 +144,7 @@ public class Product {
      * @param max
      */
     public void setMax(int max) {
-        this.min = max;
+        this.max = max;
     }
 
     /**
@@ -185,5 +188,52 @@ public class Product {
      */
     public void removeAllParts() {
         this.associatedParts.clear();
+    }
+
+    /**
+     * Is the product valid?
+     *
+     * @return
+     * @throws ValidationException
+     */
+    public boolean validate() throws ValidationException {
+        // Add up parts price
+        double totalPrice = 0.00;
+
+        for (Part p : getAssociatedParts()) {
+            totalPrice += p.getPrice();
+        }
+
+        // Product must cost more thsn its parts.
+        if (totalPrice > getPrice()) {
+            throw new ValidationException("Product must cost more thsn its parts.");
+        }
+
+        // Name isnt empty
+        if (getName().equals("")) {
+            throw new ValidationException("The name field is empty.");
+        }
+
+        // Positive numbers
+        if (getInStock() < 0 || getPrice() < 0 || getMin() < 0) {
+            throw new ValidationException("Numeric values must be positive.");
+        }
+
+        // a product must have at least one part
+        if (associatedParts.size() < 1) {
+            throw new ValidationException("The product must contain at least 1 part.");
+        }
+
+        // Min is greater than max
+        if (getMin() > getMax()) {
+            throw new ValidationException("Maximum must be more than minimum.");
+        }
+
+        // In stock must be less than max and more than min
+        if (getInStock() < getMin() || getInStock() > getMax()) {
+            throw new ValidationException("In stock must be less than max and more than min.");
+        }
+
+        return true;
     }
 }

@@ -29,6 +29,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import pa.ValidationException;
 import pa.models.Inventory;
 import static pa.models.Inventory.getParts;
 import pa.models.Part;
@@ -105,7 +106,7 @@ public class ProductScreenController implements Initializable {
         alert.setHeaderText("Cancel?");
         alert.setContentText("Leaving now will result in updates not being saved.");
         Optional<ButtonType> result = alert.showAndWait();
-        
+
         if (result.get() == ButtonType.OK) {
             Parent loader = FXMLLoader.load(getClass().getResource("/pa/views/MainScreen/MainScreen.fxml"));
             Scene scene = new Scene(loader);
@@ -238,20 +239,29 @@ public class ProductScreenController implements Initializable {
             createdProduct.addAssociatedPart(part);
         });
 
-        // Create or update product
-        if (selectedProduct == null) {
-            createdProduct.setProductID(Inventory.getProducts().size());
-            Inventory.addProduct(createdProduct);
-        } else {
-            createdProduct.setProductID(selectedProduct.getProductID());
-            Inventory.updateProduct(createdProduct);
-        }
+        try {
+            createdProduct.validate();
+            // Create or update product
+            if (selectedProduct == null) {
+                createdProduct.setProductID(Inventory.getProducts().size());
+                Inventory.addProduct(createdProduct);
+            } else {
+                createdProduct.setProductID(selectedProduct.getProductID());
+                Inventory.updateProduct(createdProduct);
+            }
 
-        Parent loader = FXMLLoader.load(getClass().getResource("/pa/views/MainScreen/MainScreen.fxml"));
-        Scene scene = new Scene(loader);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.show();
+            Parent loader = FXMLLoader.load(getClass().getResource("/pa/views/MainScreen/MainScreen.fxml"));
+            Scene scene = new Scene(loader);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(scene);
+            window.show();
+        } catch (ValidationException e) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("ValidationError");
+            alert.setHeaderText("Invalid product.");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
     }
 
 }
