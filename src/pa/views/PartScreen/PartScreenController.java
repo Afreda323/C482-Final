@@ -7,6 +7,7 @@ package pa.views.PartScreen;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,11 +16,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import pa.models.InhousePart;
 import pa.models.Inventory;
@@ -59,7 +63,7 @@ public class PartScreenController implements Initializable {
     @FXML
     private Text PageTitle;
 
-    private boolean inHouse ;
+    private boolean inHouse;
     private final Part selectedPart;
 
     /**
@@ -70,18 +74,27 @@ public class PartScreenController implements Initializable {
     }
 
     /**
-     * Called on cancel button click
+     * Called on cancel button click show confirmation before hand
      *
      * @param event
      * @throws IOException
      */
     @FXML
     void handleCancel(ActionEvent event) throws IOException {
-        Parent loader = FXMLLoader.load(getClass().getResource("/pa/views/MainScreen/MainScreen.fxml"));
-        Scene scene = new Scene(loader);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.show();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.initModality(Modality.NONE);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText("Cancel?");
+        alert.setContentText("Leaving now will result in updates not being saved.");
+        Optional<ButtonType> result = alert.showAndWait();
+        
+        if (result.get() == ButtonType.OK) {
+            Parent loader = FXMLLoader.load(getClass().getResource("/pa/views/MainScreen/MainScreen.fxml"));
+            Scene scene = new Scene(loader);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(scene);
+            window.show();
+        }
     }
 
     /**
@@ -128,7 +141,7 @@ public class PartScreenController implements Initializable {
             part.setMin(Integer.parseInt(min));
             part.setMax(Integer.parseInt(max));
             part.setMachineID(Integer.parseInt(cOrM));
-            
+
             if (selectedPart == null) {
                 part.setPartID(Inventory.getParts().size());
                 Inventory.addPart(part);
@@ -145,7 +158,7 @@ public class PartScreenController implements Initializable {
             part.setMin(Integer.parseInt(min));
             part.setMax(Integer.parseInt(max));
             part.setCompanyName(cOrM);
-            
+
             if (selectedPart == null) {
                 part.setPartID(Inventory.getParts().size());
                 Inventory.addPart(part);
@@ -172,7 +185,7 @@ public class PartScreenController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         InHouseRadio.setToggleGroup(radios);
         OutsourcedRadio.setToggleGroup(radios);
-        
+
         if (selectedPart == null) {
             PageTitle.setText("Add Part");
             IDInput.setText("AUTO GEN");

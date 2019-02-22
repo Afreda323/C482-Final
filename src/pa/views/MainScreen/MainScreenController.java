@@ -7,6 +7,7 @@ package pa.views.MainScreen;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -20,9 +21,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import pa.models.Inventory;
 import static pa.models.Inventory.getParts;
@@ -112,39 +116,70 @@ public class MainScreenController implements Initializable {
     }
 
     /**
-     * Handle clicking of delete part button
+     * Handle clicking of delete part button show confirmation alert before hand
      *
      * @param event
      */
     @FXML
     void handleDeletePart(ActionEvent event) {
         selectedPart = PartsTable.getSelectionModel().getSelectedItem();
-        Inventory.deletePart(selectedPart.getPartID());
-        setSelectedPart(null);
-        populateParts();
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.initModality(Modality.NONE);
+        alert.setTitle("Part Delete");
+        alert.setHeaderText("Delete?");
+        alert.setContentText("Are you sure you want to delete " + selectedPart.getName() + "?. This cannot be undone");
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.get() == ButtonType.OK) {
+            Inventory.deletePart(selectedPart.getPartID());
+            setSelectedPart(null);
+            populateParts();
+        }
+
     }
 
     /**
-     * Handle clicking of delete product button
+     * Handle clicking of delete product button show confirmation alert before
+     * hand
      *
      * @param event
      */
     @FXML
     void handleDeleteProduct(ActionEvent event) {
         selectedProduct = ProductsTable.getSelectionModel().getSelectedItem();
-        Inventory.removeProduct(selectedProduct.getProductID());
-        setSelectedProduct(null);
-        populateProducts();
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.initModality(Modality.NONE);
+        alert.setTitle("Product Delete");
+        alert.setHeaderText("Delete?");
+        alert.setContentText("Are you sure you want to delete " + selectedProduct.getName() + "?. This cannot be undone");
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.get() == ButtonType.OK) {
+            Inventory.removeProduct(selectedProduct.getProductID());
+            setSelectedProduct(null);
+            populateProducts();
+        }
     }
 
     /**
-     * Exit the application on click of exit button
+     * Exit the application on click of exit button Show modal before hand
      *
      * @param event
      */
     @FXML
     void handleExit(ActionEvent event) {
-        System.exit(0);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.initModality(Modality.NONE);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText("Exit?");
+        alert.setContentText("Are you sure you want to exit?");
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.get() == ButtonType.OK) {
+            System.exit(0);
+        }
     }
 
     /**
